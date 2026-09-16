@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "fluid": true,
+  "env": {
+    "AUTH_COOKIE_SECURE": "true",
+    "REQUIRE_API_KEY": "true"
+  },
+  "services": {
+    "omniroute": {
+      "runtime": "container",
+      "root": ".",
+      "entrypoint": "Dockerfile"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "omniroute"
+      }
+    }
+  ]
+}

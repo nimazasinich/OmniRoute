@@ -1,5 +1,7 @@
 FROM node:24-bookworm-slim
 
+ARG OMNIROUTE_VERSION=3.8.50
+
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     NPM_CONFIG_LEGACY_PEER_DEPS=true \
@@ -12,10 +14,12 @@ ENV NODE_ENV=production \
     OMNIROUTE_MEMORY_MB=768
 
 # Install the already-built published OmniRoute package instead of rebuilding
-# the full Next.js application from source. This intentionally avoids apt-get
-# upgrade and the Debian bash update-alternatives warning seen in the full image.
-RUN npm install -g --no-audit --no-fund omniroute@3.8.51 \
-    && test "$(omniroute --version)" = "3.8.51" \
+# the full Next.js application from source. 3.8.51 exists in the source branch
+# but is not published to npm yet; 3.8.50 is the current published release.
+# This path also avoids apt-get upgrade and the Debian bash update-alternatives
+# warning seen in the full upstream Docker image.
+RUN npm install -g --no-audit --no-fund "omniroute@${OMNIROUTE_VERSION}" \
+    && test "$(omniroute --version)" = "${OMNIROUTE_VERSION}" \
     && npm cache clean --force
 
 RUN mkdir -p /tmp/omniroute /tmp/.cache \

@@ -15,7 +15,7 @@ ENV NODE_ENV=production \
 
 # Install the already-built published OmniRoute package instead of rebuilding
 # the full Next.js application from source. 3.8.51 exists in the source branch
-# but is not published to npm yet; 3.8.50 is the current published release.
+# but is not published to npm yet; 3.8.50 is the current published npm release.
 # This path also avoids apt-get upgrade and the Debian bash update-alternatives
 # warning seen in the full upstream Docker image.
 RUN npm install -g --no-audit --no-fund "omniroute@${OMNIROUTE_VERSION}" \
